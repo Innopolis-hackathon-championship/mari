@@ -1,0 +1,7 @@
+from dataclasses import dataclass
+
+@dataclass
+class Config:
+    token: str = 'YOUR_TOKEN'
+    pay_token: str = ''
+    admin_id: int = YOUR_ID
