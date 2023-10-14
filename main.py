@@ -38,7 +38,7 @@ assortment = {
     'эшпошмак': 34,
     'Чибуречек': 65,
 }
-@bot.message_handler(commands=['Оплатить'])
+@bot.message_handler(commands=['Оплата'])
 def handle_payment(message):
     payment_button = types.InlineKeyboardButton("Оплатить заказ", callback_data='payment')
     keyboard = types.InlineKeyboardMarkup().add(payment_button)
