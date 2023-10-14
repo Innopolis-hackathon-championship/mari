@@ -38,7 +38,20 @@ assortment = {
     'эшпошмак': 34,
     'Чибуречек': 65,
 }
+@bot.message_handler(commands=['Оплатить'])
+def handle_payment(message):
+    payment_button = types.InlineKeyboardButton("Оплатить заказ", callback_data='payment')
+    keyboard = types.InlineKeyboardMarkup().add(payment_button)
+    bot.send_message(message.chat.id, 'Нажмите на кнопку для оплаты заказа:', reply_markup=keyboard)
 
+# ...
+
+@bot.callback_query_handler(func=lambda call: call.data == 'payment')
+def process_payment(callback_query):
+    # Здесь вы можете добавить логику обработки оплаты
+    # Например, отправка инструкций по оплате, ссылки на платежный сервис и т.д.
+    bot.send_message(callback_query.from_user.id, 'Процесс оплаты...')
+    bot.send_message(callback_query.from_user.id, 'Оплата успешно совершена')
 # Функция для изменения ассортимента
 def update_assortment(item_name, item_price):
     assortment[item_name] = item_price
@@ -292,7 +305,7 @@ def display_cart(message):
     cart_message = cart.display_cart()
     bot.reply_to(message, cart_message)
 
-@bot.message_handler(commands=['Отчистить'])
+@bot.message_handler(commands=['Очистить'])
 def clear_cart(message):
     cart.clear_cart()
     bot.reply_to(message, 'Корзина успешно очищена.')
@@ -427,21 +440,7 @@ def receiving_order(message):
     bot.send_message(message.chat.id, 'Подтвердите получение заказа', reply_markup=markup)
 # Функция для обработки команды /получил
 
-#Оплата
-@bot.message_handler(commands=['Оплата'])
-def handle_payment(message):
-    payment_button = types.InlineKeyboardButton("Оплатить заказ", callback_data='payment')
-    keyboard = types.InlineKeyboardMarkup().add(payment_button)
-    bot.send_message(message.chat.id, 'Нажмите на кнопку для оплаты заказа:', reply_markup=keyboard)
 
-# ...
-
-@bot.callback_query_handler(func=lambda call: call.data == 'payment')
-def process_payment(callback_query):
-    # Здесь вы можете добавить логику обработки оплаты
-    # Например, отправка инструкций по оплате, ссылки на платежный сервис и т.д.
-    bot.send_message(callback_query.from_user.id, 'Процесс оплаты...')
-    bot.send_message(callback_query.from_user.id, 'Оплата успешно совершена')
 
 
 
